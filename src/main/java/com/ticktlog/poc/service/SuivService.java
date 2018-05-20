@@ -1,6 +1,5 @@
 package com.ticktlog.poc.service;
 
-import java.io.File;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +20,14 @@ public class SuivService  {
 	
 	public SuivVeiculoDto callRestService(String placa) {
 		RestTemplate restTemplate = new RestTemplate();
-		//return parseJson(restTemplate.getForObject(suivConfig.getURL(placa), String.class));
-		return parseJson("");
+		return parseJson(restTemplate.getForObject(suivConfig.getURL(placa), String.class));
 	}	
 
 	public SuivVeiculoDto parseJson(String json) {
 		ObjectMapper mapper = new ObjectMapper();
 		 try {
-			 
-			 File file = new File("C:\\Users\\franc\\Documents\\json.txt");
 			 mapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
-			 SuivVeiculoDto t = mapper.reader().forType(SuivVeiculoDto.class).readValue(file);
+			 SuivVeiculoDto t = mapper.reader().forType(SuivVeiculoDto.class).readValue(json);
 			 System.out.println(t);
 			 return t;
 		} catch (IOException e) {
